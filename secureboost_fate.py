@@ -46,7 +46,7 @@ def csv_to_df(ctx, file_path, has_label=True):
     return fate_df
 
 
-def run(ctx, data_path_guest, data_path_host):
+def run(ctx):
     num_tree = 10
     max_depth = 10
     if ctx.is_on_guest:
