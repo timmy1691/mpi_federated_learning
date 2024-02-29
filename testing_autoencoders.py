@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import torch
-from torch import utils
+from torch.utils.data import DataLoader
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.linear_model import LogisticRegression

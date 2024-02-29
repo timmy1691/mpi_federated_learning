@@ -13,11 +13,7 @@ ENV LD_LIBRARY_PATH="$MPI_DIR/lib:$LD_LIBRARY_PATH"
 
 # WORKDIR $HOME
 
-RUN apt-get -q update \
-    && apt-get install -y \
-    python3 python3-dev python3-pip \
-    gcc gfortran binutils \
-    && pip3 install --upgrade pip \
+RUN gcc gfortran binutils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
