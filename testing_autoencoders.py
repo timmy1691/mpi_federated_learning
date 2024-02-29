@@ -5,6 +5,7 @@ from torch import utils
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
 import time
 import sys
 
@@ -45,12 +46,16 @@ class Autoencoder(nn.Module):
         self.encoder = nn.Sequential(
                             nn.Linear(input_size, enc_hidden_size),
                             nn.ReLU(),
+                            nn.Linear(enc_hidden_size, enc_hidden_size),
+                            nn.ReLU(),
                             nn.Linear(enc_hidden_size, encoding_size),
                             nn.ReLU()
                         )
         
         self.decoder = nn.Sequential(
                             nn.Linear(encoding_size, dec_hidden_size),
+                            nn.ReLU(),
+                            nn.Linear(dec_hidden_size, dec_hidden_size),
                             nn.ReLU(),
                             nn.Linear(dec_hidden_size, input_size),
                             nn.ReLU()
@@ -95,8 +100,8 @@ if rank == 0:
     input_size = data.shape[1]  # Number of input features
     encoding_dim = hidden_dim  # Desired number of output dimensions
     model = Autoencoder(input_size, encoding_dim).to(device)
-
-
+    local_pca = PCA(n_components=encoding_dim)
+    local_pca.fit(data)
     # # Loss function and optimizer
     # criterion = nn.MSELoss()
     # optimizer = optim.Adam(model.parameters(), lr=0.003)
@@ -120,7 +125,7 @@ if rank == 0:
         results[f"training_time_autoencoder_dim_{n_cols}_lr"] = training_finish_time - training_start
         results.to_csv("auto_encoder_end_to_end_training_time.csv", index=False)
     except Exception:
-        results = {f"training_time_autoencoder_dim_{n_cols}_lr" : training_finish_time - training_start}
+        results = pd.DataFrame({f"training_time_autoencoder_dim_{n_cols}_lr" : training_finish_time - training_start})
         results.to_csv("auto_encoder_end_to_end_training_time.csv", index=False)
 
 elif rank == 1:
