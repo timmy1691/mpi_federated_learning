@@ -13,9 +13,12 @@ ENV LD_LIBRARY_PATH="$MPI_DIR/lib:$LD_LIBRARY_PATH"
 
 # WORKDIR $HOME
 
-RUN gcc gfortran binutils \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN apt-get -q update \
+#     && apt-get install -y \
+#     gcc gfortran binutils \
+#     # && pip3 install --upgrade pip \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.4.tar.bz2 .
 RUN tar xf openmpi-3.1.4.tar.bz2 \
