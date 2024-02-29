@@ -29,7 +29,7 @@ if hidden_dim == None:
 
 
 data = np.random.uniform(0,2,size=(n_rows,n_cols))
-data_loaded = utils.DataLoader(data, batch_size=100, shuffle=True)
+data_loaded = DataLoader(data, batch_size=100, shuffle=True)
 
 cuda_available = torch.cuda.is_available()
 
