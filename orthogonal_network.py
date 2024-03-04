@@ -73,7 +73,7 @@ criterion = nn.BCELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001)
 
     # Train the net
-n_epochs = 100000
+n_epochs = 10000
 loss_per_batch = []
 total_loss = []
 for epoch in tqdm(range(n_epochs)):
